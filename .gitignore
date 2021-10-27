@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# my ignorations
+.vscode
+riconoscimento vocale esempio
+.cache-Norbi Gabos
+
