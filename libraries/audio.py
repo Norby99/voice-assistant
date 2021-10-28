@@ -9,7 +9,6 @@ class Vocal():
     hotAir = ["ho freddo", "fa freddo", "aria calda"]
     conditionerPowerOff = ["spegni il condizionatore", "spegni l'aria condizionata", "stacca il condizionatore", "stacca l'aria condizionata"]
 
-
     def __init__(self):
         self.r = sr.Recognizer()
 
@@ -20,10 +19,10 @@ class Vocal():
             audio = self.r.listen(source)
             try:
                 text = self.r.recognize_google(audio, language="it-IT")
-                if text.lower() == "ciao" or (("raul" in text.lower() and "ciao" in text.lower())):     #saluto
+                if text.lower() == "ciao" or ((assistantName in text.lower() and "ciao" in text.lower())):     #saluto
                     return "Ciao"
                 else:                                                                                  #non saluto
-                    if "raul".lower() not in text.lower():
+                    if assistantName.lower() not in text.lower():
                         
                         return text
                     else:
@@ -59,7 +58,6 @@ class Vocal():
                     print("No command identified: " + text.lower())
             except:
                 return False
-
 
 if __name__ == "__main__":
     audio = Vocal()
