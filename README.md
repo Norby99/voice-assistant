@@ -7,8 +7,8 @@ You can add can add commands and even modify his name
 
 # Indice
 
-- [How to use](##How-to-use)
-- [Installation guide](##Installation-guide)
+- [How to use](#How-to-use)
+- [Installation guide](#Installation-guide)
 
 ## How to use
 
