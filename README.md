@@ -13,8 +13,17 @@ You can add can add commands and even modify his name
 ## How to use
 
 You just need to follow the installation guide and than open the main.py file and run it.
-If you want to customize the assistant you just need to open the `libraries/audio.py` file and modify the first few lines. You can even change the language from there!
-> NOTE: Maybe in the future I'll implement all of this in a json file
+If you want to customize the assistant you just need to open the `setup.json` file and modify it.
+I'll leave an exemple setup. Note that all the voice commands must be lowercase and the last element of the array is a list containing the output.
+
+```json
+"conditioner" : {
+        "enabled" : "true",
+        "coldAir" : ["ho caldo", "fa caldo", "aria fredda", ["conditioner", "cold"]]
+}
+```
+
+In this case "ho caldo", "fa caldo", "aria fredda" are the expected voice inputs and '["conditioner", "cold"]' is the output.
 
 ## Installation guide
 
