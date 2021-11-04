@@ -1,15 +1,21 @@
 import speech_recognition as sr
+import os.path
+import json
 
 class Vocal():
 
-    assistantName = "patric"  # the assistant name. Change it as u like
-    language = "it-IT"
-    # this are the commands that can be executed by the bot
-    coldAir = ["ho caldo", "fa caldo", "aria fredda"]
-    hotAir = ["ho freddo", "fa freddo", "aria calda"]
-    conditionerPowerOff = ["spegni il condizionatore", "spegni l'aria condizionata", "stacca il condizionatore", "stacca l'aria condizionata"]
-
     def __init__(self):
+        with open(os.path.dirname(__file__) + "/../setup.json") as json_file:    # setting up the assistant
+            jsonData = json.load(json_file)
+
+        self.assistantName = jsonData["assistantName"].lower()
+        self.language = jsonData["language"]
+
+        self.commands = []
+        for key, value in list(jsonData.items())[2:]:
+            if value["enabled"]:
+                self.commands.append({key : value})
+
         self.r = sr.Recognizer()
 
     def listen(self):   # short example function
@@ -19,10 +25,10 @@ class Vocal():
             audio = self.r.listen(source)
             try:
                 text = self.r.recognize_google(audio, language="it-IT")
-                if text.lower() == "ciao" or ((assistantName in text.lower() and "ciao" in text.lower())):     #saluto
+                if text.lower() == "ciao" or ((self.assistantName in text.lower() and "ciao" in text.lower())):     #saluto
                     return "Ciao"
                 else:                                                                                  #non saluto
-                    if assistantName.lower() not in text.lower():
+                    if self.assistantName.lower() not in text.lower():
                         
                         return text
                     else:
@@ -30,7 +36,7 @@ class Vocal():
             except:
                 return "Non ho capito!"
 
-    def wakeUp(self):   # checks if raul is called
+    def wakeUp(self):   # checks if patric is called
         with sr.Microphone() as source:
             self.r.adjust_for_ambient_noise(source)
             audio = self.r.listen(source)
@@ -42,20 +48,18 @@ class Vocal():
                 pass
         return False
 
-    def Commands(self):
+    def Commands(self): # tries to listen for a command given in the json file
         with sr.Microphone() as source:
             self.r.adjust_for_ambient_noise(source)
             audio = self.r.listen(source)
             try:
                 text = self.r.recognize_google(audio, language=self.language)
-                if any(x in text.lower() for x in self.coldAir):
-                    return ["conditioner", "cold"]
-                elif any(x in text.lower() for x in self.hotAir):
-                    return ["conditioner", "hot"]
-                elif any(x in text.lower() for x in self.conditionerPowerOff):
-                    return ["conditioner", "off"]
-                else:
-                    print("No command identified: " + text.lower())
+
+                for items in self.commands:
+                    for value in items.values():
+                        for subValue in list(value.values())[1:]:
+                            if any(x in text.lower() for x in subValue[:-1]):
+                                return subValue[-1]
             except:
                 return False
 
