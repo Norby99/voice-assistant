@@ -1,6 +1,11 @@
 import speech_recognition as sr
 import os.path
 import json
+import sys
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__)) # I must do in this way to use it both as a library and a separate program
+sys.path.append(os.path.dirname(SCRIPT_DIR))
+from libraries.features import *
 
 class Vocal():
 
@@ -13,8 +18,9 @@ class Vocal():
 
         self.commands = []
         for key, value in list(jsonData.items())[2:]:
-            if value["enabled"]:
-                self.commands.append({key : value})
+            feature = Feature([key, value])
+            if feature.getStatus():
+                self.commands.append(feature)
 
         self.r = sr.Recognizer()
 
@@ -55,14 +61,12 @@ class Vocal():
             try:
                 text = self.r.recognize_google(audio, language=self.language)
 
-                for items in self.commands:
-                    for value in items.values():
-                        for subValue in list(value.values())[1:]:
-                            if any(x in text.lower() for x in subValue[:-1]):
-                                return subValue[-1]
+                for command in self.commands:
+                    return command.recogniseInput(text.lower())
+     
             except:
                 return False
 
 if __name__ == "__main__":
     audio = Vocal()
-    print(audio.listen())
+    print(audio.Commands())
