@@ -1,5 +1,5 @@
 from libraries.audio import *
-from libraries.conditioner import *
+from Conditioner.conditioner import *
 
 def executeCommand(command):
     if command[0] == "conditioner":
@@ -19,3 +19,5 @@ if __name__ == "__main__":
             if command:
                 print(command)
                 executeCommand(command)
+
+        print("---")
