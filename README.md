@@ -31,7 +31,8 @@ If you want to add your own module, follow the exemple below:
 
 In this module there is name "conditioner", that can be enabled or not. The features are composed by a name (i.e. coldAir) that contains a list of two list: one for the activation strings and one for the outupt strings (which are composed by the module name and the output). Finilly there is a library argument that can be "Null" or a python path that indicates a library.
 
-> NOTE: The module must be in a directory and the class name must have the same name of the directory
+> NOTE: The module must be in a directory and the class name must have the same name of the directory.
+> There must be a method in the class called execute(someString)
 
 ## Installation guide
 
