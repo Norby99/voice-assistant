@@ -15,7 +15,7 @@ class Conditioner():
         self.powerStatus = 0
         time.sleep(2)
 
-    def setStatus(self, command, repeat=True):   # takes a comand and executes it
+    def execute(self, command, repeat=True):   # takes a comand and executes it
         self.arduino.WriteSignal(command)
         if repeat:
             threading.Thread(target = self.repeatCommand, args=(command,)).start()
@@ -25,7 +25,7 @@ class Conditioner():
 
     def repeatCommand(self, command):   # this function repeats the last istruction twice, because sometimes the conditioner doesn't execute it at first
         time.sleep(2)
-        self.setStatus(command, False)
+        self.execute(command, False)
 
 if __name__ == "__main__":
 

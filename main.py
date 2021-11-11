@@ -1,13 +1,15 @@
 from libraries.audio import *
-from Conditioner.conditioner import *
 
-def executeCommand(command):
-    if command[0] == "conditioner":
-        conditioner.setStatus(command[1])
+with open(os.path.dirname(__file__) + "/setup.json") as json_file:    # setting up the assistant
+    jsonData = json.load(json_file)
 
-audio = Vocal()
-conditioner = Conditioner()
-command = ""
+commands = []
+for key, value in list(jsonData.items())[2:]:
+    feature = Feature([key, value])
+    if feature.getStatus():
+        commands.append(feature)
+
+audio = Vocal(jsonData["assistantName"].lower(), jsonData["language"], commands)
 
 if __name__ == "__main__":
     
@@ -15,9 +17,11 @@ if __name__ == "__main__":
     while True:
         if audio.wakeUp():
             print("How can i help you...")
-            command = audio.Commands()
-            if command:
-                print(command)
-                executeCommand(command)
+            
+            result = audio.Commands()
+            if result:
+                com, arg = result
+                print(arg)
+                com.execute(arg[1])
 
         print("---")

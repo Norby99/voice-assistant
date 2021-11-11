@@ -1,3 +1,5 @@
+import importlib
+
 class Feature():
 
     def __init__(self, feature):
@@ -10,6 +12,9 @@ class Feature():
                 self.commands.append(Command(name, feature[1]["features"][name][0], feature[1]["features"][name][1]))
             
         self.library = feature[1]["library"]
+        
+        if self.library != "Null":
+            exec("self.obj = importlib.import_module(self.library)."+self.library.split(".")[0]+"()")   # creates the requered object
 
     def getName(self):  # returns the name of the Feature
         return self.name
@@ -20,11 +25,16 @@ class Feature():
     def getLibrary(self):   # returns the library that is required by the feature
         return self.library
 
-    def recogniseInput(self, input):    # returns the response if the "input" is in any of the feature command
+    def recogniseInput(self, input, text=True):    # returns the response if the "input" is in any of the feature command
         for command in self.commands:
             if any(x in input for x in command.getVoiceInputs()):
-                return command.getResponse()
+                if text:
+                    return self, command.getResponse()
+
         return None
+
+    def execute(self, arg):
+        self.obj.execute(arg)
 
 
 class Command():

@@ -9,18 +9,10 @@ from libraries.features import *
 
 class Vocal():
 
-    def __init__(self):
-        with open(os.path.dirname(__file__) + "/../setup.json") as json_file:    # setting up the assistant
-            jsonData = json.load(json_file)
-
-        self.assistantName = jsonData["assistantName"].lower()
-        self.language = jsonData["language"]
-
-        self.commands = []
-        for key, value in list(jsonData.items())[2:]:
-            feature = Feature([key, value])
-            if feature.getStatus():
-                self.commands.append(feature)
+    def __init__(self, name, language, commands):
+        self.commands = commands
+        self.assistantName = name
+        self.language = language
 
         self.r = sr.Recognizer()
 
@@ -68,5 +60,14 @@ class Vocal():
                 return False
 
 if __name__ == "__main__":
-    audio = Vocal()
+    with open(os.path.dirname(__file__) + "/../setup.json") as json_file:    # setting up the assistant
+        jsonData = json.load(json_file)
+
+    commands = []
+    for key, value in list(jsonData.items())[2:]:
+        feature = Feature([key, value])
+        if feature.getStatus():
+            commands.append(feature)
+
+    audio = Vocal(jsonData["assistantName"].lower(), jsonData["language"], commands)
     print(audio.Commands())
