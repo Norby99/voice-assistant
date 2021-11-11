@@ -1,0 +1,14 @@
+{
+    "assistantName" : "Patrick",
+    "language" : "it-IT",
+
+    "conditioner" : {
+        "enabled" : "true",
+        "features" : {
+            "coldAir" : [["ho caldo", "fa caldo", "aria fredda"], ["conditioner", "cold"]],
+            "hotAir" : [["ho freddo", "fa freddo", "aria calda"], ["conditioner", "hot"]],
+            "conditionerPowerOff" : [["spegni il condizionatore", "spegni l'aria condizionata", "stacca il condizionatore", "stacca l'aria condizionata"], ["conditioner", "off"]]
+        },
+        "library" : "Conditioner.conditioner"
+    }
+}
