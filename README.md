@@ -1,5 +1,5 @@
 # voice-assistant
-This is my voice assistant Patric!
+This is my voice assistant Patrick!
 
 You can add commands and even modify his name
 
