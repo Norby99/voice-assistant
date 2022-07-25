@@ -17,6 +17,8 @@ void loop() {
     condi->setColdAir();
   }else if( inputMessage == "HOT") {
     condi->setHotAir();
+  } else if(inputMessage == "DEUMIDIFY") {
+    condi->setDeumidificatore();
   }else if ( inputMessage == "OFF") {
     condi->powerOff();
   }
