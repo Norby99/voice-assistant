@@ -30,4 +30,5 @@ class Conditioner():
 if __name__ == "__main__":
 
     cond = Conditioner()
-    cond.setStatus("off")
+    cond.execute("COLD")
+    #cond.execute("off")
